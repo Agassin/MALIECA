@@ -1,14 +1,10 @@
-"""Main assistant orchestration logic."""
-
-
 class Assistant:
-    """Minimal assistant core that can later orchestrate tools and memory."""
-
     def __init__(self, name: str = "M.A.L.I.E.C.A.") -> None:
         self.name = name
+        self._nb_messages = 0
 
     def respond(self, message: str) -> str:
-        """Return a basic response while the real reasoning layer is built."""
+        self._nb_messages += 1
         message = message.strip()
         if not message:
             return "Je n'ai pas reçu de demande."
