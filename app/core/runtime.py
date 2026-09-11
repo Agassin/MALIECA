@@ -1,15 +1,24 @@
 """Moteur qui orchestre le fonctionnement de M.A.L.I.E.C.A."""
 
+from typing import Any
+
 from app.ai.base import AIModel
 from app.core.models import ConversationContext
+from app.tools.base import ToolResult
+from app.tools.registry import ToolRegistry
 
 
 class Runtime:
-    """Gère le contexte et l'exécution du modèle IA."""
+    """Gère le contexte, les outils et le modèle IA."""
 
-    def __init__(self, model: AIModel | None = None) -> None:
+    def __init__(
+        self,
+        model: AIModel | None = None,
+        tool_registry: ToolRegistry | None = None,
+    ) -> None:
         self.model = model
         self.context = ConversationContext()
+        self.tool_registry = tool_registry or ToolRegistry()
 
     def respond(self, message: str, assistant_name: str) -> str:
         """Traite un message et renvoie la réponse de M.A.L.I.E.C.A."""
@@ -29,3 +38,8 @@ class Runtime:
         # La réponse est également conservée pour les prochains messages.
         self.context.add_assistant_message(response)
         return response
+
+    def execute_tool(self, name: str, arguments: dict[str, Any]) -> ToolResult:
+        """Exécute un outil enregistré."""
+        tool = self.tool_registry.get(name)
+        return tool.execute(arguments)
