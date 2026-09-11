@@ -3,7 +3,7 @@
 import json
 from urllib import error, request
 
-from app.ai.base import AIMessage, AIModel, AIResponse
+from app.ai.base import AIToolDefinition, AIMessage, AIModel, AIResponse
 
 
 class OllamaModel(AIModel):
@@ -17,8 +17,14 @@ class OllamaModel(AIModel):
         self.model = model
         self.base_url = base_url.rstrip("/")
 
-    def generate(self, messages: list[AIMessage]) -> AIResponse:
+    def generate(
+        self,
+        messages: list[AIMessage],
+        tools: list[AIToolDefinition] | None = None,
+    ) -> AIResponse:
         """Envoie les messages à Ollama et récupère sa réponse."""
+        del tools  # Le support natif du tool calling Ollama sera ajouté ensuite.
+
         payload = {
             "model": self.model,
             "messages": [
