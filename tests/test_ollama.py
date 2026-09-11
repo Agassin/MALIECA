@@ -2,6 +2,8 @@ import json
 from unittest.mock import patch
 from urllib.error import URLError
 
+import pytest
+
 from app.ai.base import AIMessage
 from app.ai.providers.ollama import OllamaModel
 
@@ -47,8 +49,5 @@ def test_ollama_signale_quand_le_service_est_inaccessible():
     ):
         model = OllamaModel()
 
-        try:
+        with pytest.raises(RuntimeError, match="Impossible de contacter Ollama"):
             model.generate([AIMessage(role="user", content="Bonjour")])
-            assert False
-        except RuntimeError as error:
-            assert "Impossible de contacter Ollama" in str(error)
