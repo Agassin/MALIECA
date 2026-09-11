@@ -3,7 +3,7 @@
 import json
 from urllib import error, request
 
-from app.ai.base import AIToolDefinition, AIMessage, AIModel, AIResponse
+from app.ai.base import AIMessage, AIModel, AIResponse, AIToolDefinition
 
 
 class OllamaModel(AIModel):
