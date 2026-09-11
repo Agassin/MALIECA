@@ -1,6 +1,6 @@
 """Moteur qui orchestre le fonctionnement de M.A.L.I.E.C.A."""
 
-from app.ai.base import AIToolDefinition, AIMessage, AIModel, ToolCall
+from app.ai.base import AIToolDefinition, AIModel
 from app.core.models import ConversationContext
 from app.tools.base import ToolResult
 from app.tools.builtin.clock import ClockTool
