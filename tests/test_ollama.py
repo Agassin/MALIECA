@@ -1,5 +1,6 @@
 import json
 from unittest.mock import patch
+from urllib.error import URLError
 
 from app.ai.base import AIMessage
 from app.ai.providers.ollama import OllamaModel
@@ -27,7 +28,10 @@ def test_ollama_envoie_les_messages_et_recupere_la_reponse():
         }
     )
 
-    with patch("app.ai.providers.ollama.request.urlopen", return_value=response) as urlopen:
+    with patch(
+        "app.ai.providers.ollama.request.urlopen",
+        return_value=response,
+    ) as urlopen:
         model = OllamaModel()
         result = model.generate([AIMessage(role="user", content="Bonjour")])
 
@@ -37,8 +41,6 @@ def test_ollama_envoie_les_messages_et_recupere_la_reponse():
 
 
 def test_ollama_signale_quand_le_service_est_inaccessible():
-    from urllib.error import URLError
-
     with patch(
         "app.ai.providers.ollama.request.urlopen",
         side_effect=URLError("connexion refusée"),
