@@ -5,6 +5,7 @@ from typing import Any
 from app.ai.base import AIModel
 from app.core.models import ConversationContext
 from app.tools.base import ToolResult
+from app.tools.builtin.clock import ClockTool
 from app.tools.registry import ToolRegistry
 
 
@@ -19,6 +20,10 @@ class Runtime:
         self.model = model
         self.context = ConversationContext()
         self.tool_registry = tool_registry or ToolRegistry()
+
+        # On ajoute les outils de base quand aucun registre n'est fourni.
+        if tool_registry is None:
+            self.tool_registry.register(ClockTool())
 
     def respond(self, message: str, assistant_name: str) -> str:
         """Traite un message et renvoie la réponse de M.A.L.I.E.C.A."""
