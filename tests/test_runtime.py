@@ -1,7 +1,7 @@
 from app.ai.base import AIMessage, AIModel, AIResponse, ToolCall
 from app.core.assistant import Assistant
+from app.tools.base import Tool, ToolResult, ToolRisk
 from app.tools.registry import ToolRegistry
-from tests.test_tools import FakeTool
 
 
 class FakeModel(AIModel):
@@ -26,6 +26,15 @@ def test_runtime_keeps_previous_context():
     assert len(messages) == 4
     assert messages[0].content == "Premier message"
     assert messages[2].content == "Deuxième message"
+
+
+class FakeRuntimeTool(Tool):
+    name = "fake"
+    description = "Outil utilisé pour les tests du Runtime."
+    risk_level = ToolRisk.READ_ONLY
+
+    def execute(self, arguments: dict[str, object]) -> ToolResult:
+        return ToolResult(success=True, output=arguments)
 
 
 class AgenticFakeModel(AIModel):
@@ -55,7 +64,7 @@ class AgenticFakeModel(AIModel):
 def test_runtime_execute_la_boucle_agentique():
     model = AgenticFakeModel()
     registry = ToolRegistry()
-    registry.register(FakeTool())
+    registry.register(FakeRuntimeTool())
     assistant = Assistant(model=model)
     assistant.runtime.tool_registry = registry
 
@@ -82,7 +91,7 @@ def test_runtime_arrete_une_boucle_agentique_infinie():
             )
 
     registry = ToolRegistry()
-    registry.register(FakeTool())
+    registry.register(FakeRuntimeTool())
     assistant = Assistant(model=LoopingModel())
     assistant.runtime.tool_registry = registry
     assistant.runtime.max_tool_iterations = 2
