@@ -1,7 +1,7 @@
 from datetime import datetime
 
-from app.tools.builtin.clock import ClockTool
 from app.tools.base import ToolRisk
+from app.tools.builtin.clock import ClockTool
 
 
 def test_clock_est_un_outil_lecture_seule():
@@ -17,4 +17,4 @@ def test_clock_renvoie_la_date_et_l_heure():
 
     assert result.success is True
     assert isinstance(result.output, str)
-    assert datetime.now().strftime("%d/%m/%Y") in result.output
+    assert datetime.now().astimezone().strftime("%d/%m/%Y") in result.output
