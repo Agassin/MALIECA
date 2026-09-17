@@ -48,7 +48,10 @@ class OllamaModel(AIModel):
             ) from exc
 
         message = result.get("message", {})
-        tool_calls = tuple(self._parse_tool_call(call, index) for index, call in enumerate(message.get("tool_calls", [])))
+        tool_calls = tuple(
+            self._parse_tool_call(call, index)
+            for index, call in enumerate(message.get("tool_calls", []))
+        )
         content = message.get("content", "")
 
         if not content and not tool_calls:
@@ -99,12 +102,12 @@ class OllamaModel(AIModel):
         """Transforme un appel d'outil Ollama en appel interne."""
         function = call.get("function", {})
         if not isinstance(function, dict):
-            raise RuntimeError("Ollama a renvoyé un appel d'outil invalide.")
+            raise TypeError("Ollama a renvoyé un appel d'outil invalide.")
 
         name = function.get("name")
         arguments = function.get("arguments", {})
         if not isinstance(name, str) or not isinstance(arguments, dict):
-            raise RuntimeError("Ollama a renvoyé un appel d'outil invalide.")
+            raise TypeError("Ollama a renvoyé un appel d'outil invalide.")
 
         return ToolCall(
             id=f"ollama-call-{index}",
