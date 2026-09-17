@@ -59,6 +59,7 @@ class Runtime:
                 self.context.add_tool_message(
                     self._format_tool_result(result),
                     tool_call.id,
+                    tool_call.name,
                 )
 
         raise RuntimeError(
@@ -81,6 +82,7 @@ class Runtime:
                 name=tool.name,
                 description=tool.description,
                 risk_level=int(tool.risk_level),
+                parameters=tool.parameters,
             )
             for tool in self.tool_registry.list_tools()
         ]
