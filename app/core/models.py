@@ -25,8 +25,13 @@ class ConversationContext:
             AIMessage(role="assistant", content=content, tool_calls=tool_calls)
         )
 
-    def add_tool_message(self, content: str, tool_call_id: str) -> None:
+    def add_tool_message(self, content: str, tool_call_id: str, tool_name: str) -> None:
         """Ajoute le résultat d'un outil au contexte."""
         self.messages.append(
-            AIMessage(role="tool", content=content, tool_call_id=tool_call_id)
+            AIMessage(
+                role="tool",
+                content=content,
+                tool_call_id=tool_call_id,
+                tool_name=tool_name,
+            )
         )
