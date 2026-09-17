@@ -11,6 +11,9 @@ class AIToolDefinition:
     name: str
     description: str
     risk_level: int
+    parameters: dict[str, object] = field(
+        default_factory=lambda: {"type": "object", "properties": {}}
+    )
 
 
 @dataclass(frozen=True)
@@ -30,6 +33,7 @@ class AIMessage:
     content: str
     tool_calls: tuple[ToolCall, ...] = ()
     tool_call_id: str | None = None
+    tool_name: str | None = None
 
 
 @dataclass(frozen=True)
