@@ -31,6 +31,7 @@ class Tool(ABC):
     name: str
     description: str
     risk_level: ToolRisk
+    parameters: dict[str, object] = {"type": "object", "properties": {}}
 
     @abstractmethod
     def execute(self, arguments: dict[str, Any]) -> ToolResult:
