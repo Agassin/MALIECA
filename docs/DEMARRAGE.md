@@ -1,17 +1,17 @@
 # Démarrer M.A.L.I.E.C.A.
 
-Ce guide permet de lancer la version actuelle de M.A.L.I.E.C.A. avec Ollama comme moteur IA temporaire.
+Ce guide permet de lancer la version actuelle avec Ollama comme moteur IA temporaire.
 
-> Ollama n'est pas le modèle final de M.A.L.I.E.C.A. Il sert actuellement uniquement à tester le Runtime, les outils et la boucle agentique avant la création de MALIECA-LLM.
+> Ollama n'est pas le modèle final. Il sert à tester le Runtime, les outils et la boucle agentique avant la création de MALIECA-LLM.
 
 ## 1. Prérequis
 
 - Python 3.11 ou plus récent
 - Git
 - Ollama installé et lancé
-- un modèle Ollama compatible avec le tool calling
+- un modèle compatible avec le tool calling
 
-La documentation officielle d'Ollama décrit le tool calling et le cycle agentique :
+Documentation officielle du tool calling Ollama :
 https://docs.ollama.com/capabilities/tool-calling
 
 ## 2. Récupérer le projet
@@ -55,13 +55,13 @@ Puis récupérer le modèle utilisé par défaut :
 ollama pull qwen3
 ```
 
-Vérifier qu'Ollama répond :
+Vérifier :
 
 ```bash
 ollama list
 ```
 
-Si le service n'est pas lancé automatiquement, démarrer Ollama avec :
+Si le service n'est pas lancé automatiquement :
 
 ```bash
 ollama serve
@@ -73,11 +73,6 @@ Les tests utilisent des faux modèles et ne nécessitent pas Ollama :
 
 ```bash
 pytest
-```
-
-Puis vérifier le lint :
-
-```bash
 ruff check .
 ```
 
@@ -91,12 +86,6 @@ Avec l'environnement virtuel activé :
 python -m app.main
 ```
 
-Ou :
-
-```bash
-python -m app
-```
-
 Tu devrais voir :
 
 ```text
@@ -106,7 +95,7 @@ Tapez 'quit' pour quitter.
 > 
 ```
 
-Tu peux alors tester par exemple :
+Tests simples :
 
 ```text
 > Bonjour
@@ -119,9 +108,9 @@ Pour quitter :
 > quit
 ```
 
-## 8. Ce qui doit se passer pour un appel d'outil
+## 8. Test du Tool Calling
 
-Pour une demande nécessitant l'outil date/heure, le fonctionnement attendu est :
+Pour une demande nécessitant l'outil date/heure :
 
 ```text
 Utilisateur
@@ -130,7 +119,7 @@ Runtime
     ↓
 Ollama / qwen3
     ↓
-Demande d'utilisation de get_current_time
+get_current_time
     ↓
 ToolRegistry
     ↓
@@ -143,13 +132,11 @@ Ollama / qwen3
 Réponse finale
 ```
 
-Le Runtime limite le nombre d'itérations de la boucle agentique pour éviter une boucle infinie.
+Le Runtime limite le nombre d'itérations afin d'éviter une boucle infinie.
 
-## 9. En cas d'erreur Ollama
+## 9. Dépannage
 
 ### « Impossible de contacter Ollama »
-
-Vérifier que le service fonctionne :
 
 ```bash
 ollama list
@@ -167,22 +154,15 @@ ollama serve
 ollama pull qwen3
 ```
 
-### Le modèle répond mais n'utilise pas l'outil
+### Le modèle n'utilise pas l'outil
 
-Le modèle doit prendre en charge le tool calling. Vérifier le modèle installé et consulter la documentation officielle d'Ollama.
+Vérifier que le modèle installé prend en charge le tool calling.
 
-## 10. Vérification complète avant un commit
-
-Exécuter :
+## 10. Vérification avant commit
 
 ```bash
 ruff check .
 pytest
-```
-
-Puis vérifier l'état Git :
-
-```bash
 git status
 ```
 
@@ -204,4 +184,4 @@ Contexte  ToolRegistry
  Réponse finale
 ```
 
-Le contrat `AIModel` reste indépendant d'Ollama afin de permettre plus tard l'intégration de MALIECA-LLM.
+Le contrat `AIModel` reste indépendant d'Ollama afin de permettre l'intégration future de MALIECA-LLM.
