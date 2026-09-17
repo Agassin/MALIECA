@@ -4,7 +4,7 @@ from urllib.error import URLError
 
 import pytest
 
-from app.ai.base import AIToolDefinition, AIMessage, ToolCall
+from app.ai.base import AIMessage, AIToolDefinition, ToolCall
 from app.ai.providers.ollama import OllamaModel
 
 
