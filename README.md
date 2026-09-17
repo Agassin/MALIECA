@@ -49,7 +49,6 @@ L'objectif final est de construire **MALIECA-LLM**, notre propre modèle princip
 
 - [x] CLI
 - [x] lancement avec `python -m app.main`
-- [x] lancement avec `python -m app`
 - [x] guide de démarrage
 
 ## Démarrage rapide
@@ -68,7 +67,7 @@ Activer l'environnement virtuel, puis :
 python -m pip install --upgrade pip
 python -m pip install -e '.[dev]'
 ollama pull qwen3
-python -m app
+python -m app.main
 ```
 
 Pour vérifier le projet sans Ollama :
