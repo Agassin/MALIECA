@@ -3,7 +3,7 @@
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
 from enum import IntEnum
-from typing import Any
+from typing import Any, ClassVar
 
 
 class ToolRisk(IntEnum):
@@ -31,7 +31,7 @@ class Tool(ABC):
     name: str
     description: str
     risk_level: ToolRisk
-    parameters: dict[str, object] = {"type": "object", "properties": {}}
+    parameters: ClassVar[dict[str, object]] = {"type": "object", "properties": {}}
 
     @abstractmethod
     def execute(self, arguments: dict[str, Any]) -> ToolResult:
