@@ -1,3 +1,5 @@
+from typing import ClassVar
+
 import pytest
 
 from app.ai.base import AIMessage, AIModel, AIResponse, ToolCall
@@ -176,7 +178,7 @@ def test_runtime_ne_transmet_pas_les_outils_non_autorises_au_modele():
 
 class IntegerArgumentTool(FakeRuntimeTool):
     name = "integer_argument"
-    parameters = {
+    parameters: ClassVar[dict[str, object]] = {
         "type": "object",
         "properties": {"count": {"type": "integer"}},
         "required": ["count"],
