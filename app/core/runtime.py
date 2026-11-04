@@ -5,6 +5,7 @@ from app.core.models import ConversationContext
 from app.tools.base import ToolResult, ToolRisk
 from app.tools.builtin.clock import ClockTool
 from app.tools.registry import ToolRegistry
+from app.tools.validation import validate_arguments
 
 
 class Runtime:
@@ -103,6 +104,14 @@ class Runtime:
             return ToolResult(
                 success=False,
                 error=f"Arguments invalides pour l'outil '{name}'.",
+            )
+
+        try:
+            validate_arguments(arguments, tool.parameters)
+        except (TypeError, ValueError) as error:
+            return ToolResult(
+                success=False,
+                error=f"Arguments invalides pour l'outil '{name}' : {error}",
             )
 
         try:
