@@ -2,7 +2,7 @@
 
 from app.ai.base import AIModel, AIToolDefinition
 from app.core.models import ConversationContext
-from app.tools.base import ToolResult
+from app.tools.base import ToolResult, ToolRisk
 from app.tools.builtin.clock import ClockTool
 from app.tools.registry import ToolRegistry
 
@@ -16,6 +16,9 @@ class Runtime:
         tool_registry: ToolRegistry | None = None,
         max_tool_iterations: int = 8,
     ) -> None:
+        if max_tool_iterations < 1:
+            raise ValueError("La limite d'itérations doit être supérieure à zéro.")
+
         self.model = model
         self.context = ConversationContext()
         self.tool_registry = tool_registry or ToolRegistry()
@@ -39,7 +42,8 @@ class Runtime:
             self.context.add_assistant_message(response)
             return response
 
-        for _ in range(self.max_tool_iterations):
+        tool_iterations = 0
+        while True:
             response = self.model.generate(
                 self.context.messages,
                 tools=self._get_tool_definitions(),
@@ -48,6 +52,12 @@ class Runtime:
             if not response.tool_calls:
                 self.context.add_assistant_message(response.content)
                 return response.content
+
+            # La limite porte sur les cycles d'outils, pas sur la réponse finale.
+            if tool_iterations >= self.max_tool_iterations:
+                raise RuntimeError(
+                    "La boucle agentique a atteint sa limite d'itérations."
+                )
 
             self.context.add_assistant_message(
                 response.content,
@@ -62,18 +72,46 @@ class Runtime:
                     tool_call.name,
                 )
 
-        raise RuntimeError(
-            "La boucle agentique a atteint sa limite d'itérations."
-        )
+            tool_iterations += 1
 
     def execute_tool(
         self,
         name: str,
         arguments: dict[str, object],
     ) -> ToolResult:
-        """Exécute un outil enregistré."""
-        tool = self.tool_registry.get(name)
-        return tool.execute(arguments)
+        """Exécute un outil autorisé et transforme les erreurs en résultats."""
+        try:
+            tool = self.tool_registry.get(name)
+        except KeyError:
+            return ToolResult(
+                success=False,
+                error=f"L'outil '{name}' n'est pas enregistré.",
+            )
+
+        # Aucun outil qui modifie des données ou agit à l'extérieur ne s'exécute
+        # automatiquement. Un système de confirmation sera ajouté ultérieurement.
+        if tool.risk_level != ToolRisk.READ_ONLY:
+            return ToolResult(
+                success=False,
+                error=(
+                    f"Exécution bloquée : l'outil '{name}' nécessite une "
+                    "autorisation explicite."
+                ),
+            )
+
+        if not isinstance(arguments, dict):
+            return ToolResult(
+                success=False,
+                error=f"Arguments invalides pour l'outil '{name}'.",
+            )
+
+        try:
+            return tool.execute(arguments)
+        except Exception as error:
+            return ToolResult(
+                success=False,
+                error=f"Échec de l'outil '{name}' : {error}",
+            )
 
     def _get_tool_definitions(self) -> list[AIToolDefinition]:
         """Transforme les outils disponibles en contrat pour le modèle."""
