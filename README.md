@@ -47,6 +47,8 @@ L'objectif final est de construire **MALIECA-LLM**, notre propre modèle princip
 - [x] exécution automatique limitée aux outils en lecture seule
 - [x] blocage des outils modificateurs sans autorisation
 - [x] gestion contrôlée des outils inconnus et des exceptions
+- [x] prototype de tokenizer BPE au niveau des octets
+- [x] tests d'encodage/décodage, de reproductibilité et de sauvegarde du tokenizer
 
 ### Interface
 
@@ -167,7 +169,8 @@ Le Runtime ne dépend pas directement d'Ollama. L'adaptateur Ollama implémente 
 MALIECA/
 ├── app/
 │   ├── ai/
-│   │   └── providers/
+│   │   ├── providers/
+│   │   └── tokenizers/
 │   ├── core/
 │   ├── memory/
 │   ├── tools/
