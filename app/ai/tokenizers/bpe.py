@@ -33,7 +33,10 @@ class BytePairTokenizer:
         if min_frequency < 1:
             raise ValueError("La fréquence minimale doit être positive.")
 
-        sequences = [[bytes([value]) for value in text.encode("utf-8")] for text in texts]
+        sequences = [
+            [bytes([value]) for value in text.encode("utf-8")]
+            for text in texts
+        ]
         merges: list[tuple[bytes, bytes]] = []
         vocabulary = {bytes([value]) for value in range(cls.BASE_VOCAB_SIZE)}
 
@@ -65,9 +68,9 @@ class BytePairTokenizer:
                 index = 0
                 while index < len(sequence):
                     if (
-                        index + 1 < len(units)
-                        and units[index] == left
-                        and units[index + 1] == right
+                        index + 1 < len(sequence)
+                        and sequence[index] == left
+                        and sequence[index + 1] == right
                     ):
                         updated.append(merged)
                         index += 2
@@ -90,8 +93,8 @@ class BytePairTokenizer:
             while index < len(units):
                 if (
                     index + 1 < len(units)
-                    and sequence[index] == left
-                    and sequence[index + 1] == right
+                    and units[index] == left
+                    and units[index + 1] == right
                 ):
                     updated.append(merged)
                     index += 2
