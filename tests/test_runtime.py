@@ -159,3 +159,15 @@ def test_runtime_transforme_une_exception_d_outil_en_erreur():
 def test_runtime_refuse_une_limite_d_iterations_nulle():
     with pytest.raises(ValueError, match="supérieure à zéro"):
         Runtime(max_tool_iterations=0)
+
+
+def test_runtime_ne_transmet_pas_les_outils_non_autorises_au_modele():
+    registry = ToolRegistry()
+    registry.register(FakeRuntimeTool())
+    registry.register(ReversibleFakeTool())
+    assistant = Assistant(model=AgenticFakeModel())
+    assistant.runtime.tool_registry = registry
+
+    definitions = assistant.runtime._get_tool_definitions()
+
+    assert [definition.name for definition in definitions] == ["fake"]
