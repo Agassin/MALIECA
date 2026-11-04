@@ -49,6 +49,7 @@ L'objectif final est de construire **MALIECA-LLM**, notre propre modèle princip
 - [x] gestion contrôlée des outils inconnus et des exceptions
 - [x] prototype de tokenizer BPE au niveau des octets
 - [x] tests d'encodage/décodage, de reproductibilité et de sauvegarde du tokenizer
+- [x] métriques d'évaluation BPE et script de démonstration
 
 ### Interface
 
@@ -74,6 +75,14 @@ python -m pip install -e '.[dev]'
 ollama pull qwen3
 python -m app.main
 ```
+
+Pour évaluer le prototype BPE sur son corpus synthétique :
+
+```bash
+python scripts/evaluer_tokenizer.py
+```
+
+Ce résultat est un contrôle technique initial, pas un benchmark représentatif.
 
 Pour vérifier le projet sans Ollama :
 
@@ -121,7 +130,8 @@ Le Runtime ne dépend pas directement d'Ollama. L'adaptateur Ollama implémente 
 ### Phase 1 — JARVIS Brain
 - [ ] Relever et documenter le matériel de développement
 - [x] Cadrage initial de MALIECA-LLM (`docs/CONCEPTION_MALIECA_LLM.md`)
-- [ ] Prototyper et évaluer le tokenizer
+- [x] Premier protocole de mesure du tokenizer (corpus synthétique)
+- [ ] Évaluer le tokenizer sur un corpus français représentatif et documenté
 - [ ] Connecter et tester davantage de modèles locaux temporaires
 - [ ] Concevoir l'architecture du modèle
 - [ ] Sélectionner des données autorisées et documenter leurs licences
