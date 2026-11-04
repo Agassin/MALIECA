@@ -37,6 +37,10 @@ class FakeRuntimeTool(Tool):
     name = "fake"
     description = "Outil utilisé pour les tests du Runtime."
     risk_level = ToolRisk.READ_ONLY
+    parameters: ClassVar[dict[str, object]] = {
+        "type": "object",
+        "properties": {"message": {"type": "string"}},
+    }
 
     def execute(self, arguments: dict[str, object]) -> ToolResult:
         return ToolResult(success=True, output=arguments)
