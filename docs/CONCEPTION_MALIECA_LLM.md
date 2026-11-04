@@ -115,7 +115,7 @@ Le modèle ne doit jamais exécuter lui-même une action système. Il propose un
 Principes :
 - les outils en lecture seule peuvent être exécutés automatiquement ;
 - les outils qui modifient des données ou agissent à l'extérieur restent bloqués tant qu'un mécanisme d'autorisation explicite n'existe pas ;
-- les arguments sont validés côté application, jamais considérés comme fiables parce que le modèle les a produits ;
+- les arguments devront être validés côté application avant exécution ; ils ne sont jamais considérés comme fiables parce que le modèle les a produits ;
 - les erreurs d'outils sont renvoyées au modèle comme résultats contrôlés ;
 - une limite d'itérations empêche les boucles infinies.
 
