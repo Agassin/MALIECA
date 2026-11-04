@@ -44,6 +44,9 @@ L'objectif final est de construire **MALIECA-LLM**, notre propre modèle princip
 - [x] limite contre les boucles infinies
 - [x] Tool Calling natif avec Ollama
 - [x] tests du Tool Calling
+- [x] exécution automatique limitée aux outils en lecture seule
+- [x] blocage des outils modificateurs sans autorisation
+- [x] gestion contrôlée des outils inconnus et des exceptions
 
 ### Interface
 
@@ -77,6 +80,12 @@ ruff check .
 pytest
 ```
 
+## Sécurité actuelle du Runtime
+
+Le Runtime exécute automatiquement uniquement les outils `READ_ONLY`. Les outils qui modifient des données ou déclenchent une action externe sont bloqués tant qu'un mécanisme de confirmation explicite n'est pas disponible. Les outils inconnus et les exceptions sont convertis en résultats d'erreur contrôlés.
+
+Cette protection est volontairement restrictive : elle évite qu'un modèle puisse déclencher une action non autorisée simplement en produisant un appel d'outil.
+
 ## Architecture actuelle
 
 ```text
@@ -108,11 +117,12 @@ Le Runtime ne dépend pas directement d'Ollama. L'adaptateur Ollama implémente 
 - [x] Première boucle agentique
 
 ### Phase 1 — JARVIS Brain
+- [ ] Relever et documenter le matériel de développement
+- [x] Cadrage initial de MALIECA-LLM (`docs/CONCEPTION_MALIECA_LLM.md`)
+- [ ] Prototyper et évaluer le tokenizer
 - [ ] Connecter et tester davantage de modèles locaux temporaires
-- [ ] Définir les besoins de MALIECA-LLM
-- [ ] Définir le tokenizer
 - [ ] Concevoir l'architecture du modèle
-- [ ] Préparer les données
+- [ ] Sélectionner des données autorisées et documenter leurs licences
 - [ ] Entraîner une première version
 - [ ] Intégrer MALIECA-LLM dans `AIModel`
 - [ ] Retirer progressivement Ollama
