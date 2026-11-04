@@ -1,5 +1,8 @@
+import pytest
+
 from app.ai.base import AIMessage, AIModel, AIResponse, ToolCall
 from app.core.assistant import Assistant
+from app.core.runtime import Runtime
 from app.tools.base import Tool, ToolResult, ToolRisk
 from app.tools.registry import ToolRegistry
 
@@ -154,9 +157,5 @@ def test_runtime_transforme_une_exception_d_outil_en_erreur():
 
 
 def test_runtime_refuse_une_limite_d_iterations_nulle():
-    import pytest
-
     with pytest.raises(ValueError, match="supérieure à zéro"):
-        from app.core.runtime import Runtime
-
         Runtime(max_tool_iterations=0)
