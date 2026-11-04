@@ -42,7 +42,7 @@ Composants à prototyper :
 - projection vers le vocabulaire ;
 - fonction de perte cross-entropy.
 
-Aucune taille définitive n'est choisie avant l'inventaire du matériel et un benchmark mémoire/temps.
+Une configuration validée et indépendante du backend est disponible dans `app/ai/models/config.py` (`TransformerConfig`). Elle contrôle les dimensions positives, la compatibilité entre `d_model` et `num_heads`, la taille minimale du vocabulaire et les bornes du dropout. Elle ne construit pas encore de réseau neuronal et ne fixe aucune valeur recommandée pour la machine.\n\nAucune taille définitive n'est choisie avant l'inventaire du matériel et un benchmark mémoire/temps.
 
 ### 3.2 Tokenizer
 
