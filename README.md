@@ -84,7 +84,7 @@ pytest
 
 ## Sécurité actuelle du Runtime
 
-Le Runtime exécute automatiquement uniquement les outils `READ_ONLY`. Les outils qui modifient des données ou déclenchent une action externe sont bloqués tant qu'un mécanisme de confirmation explicite n'est pas disponible. Les outils inconnus et les exceptions sont convertis en résultats d'erreur contrôlés.
+Le Runtime ne présente au modèle et n'exécute automatiquement que les outils `READ_ONLY`. Les outils qui modifient des données ou déclenchent une action externe sont bloqués tant qu'un mécanisme de confirmation explicite n'est pas disponible. Les outils inconnus et les exceptions sont convertis en résultats d'erreur contrôlés.
 
 Cette protection est volontairement restrictive : elle évite qu'un modèle puisse déclencher une action non autorisée simplement en produisant un appel d'outil.
 
