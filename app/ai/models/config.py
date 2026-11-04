@@ -36,7 +36,7 @@ class TransformerConfig:
             raise ValueError("d_model doit être divisible par num_heads.")
 
         if not isinstance(self.dropout, (int, float)) or isinstance(self.dropout, bool):
-            raise ValueError("dropout doit être un nombre compris entre 0 et 1.")
+            raise TypeError("dropout doit être un nombre compris entre 0 et 1.")
         if not 0 <= self.dropout < 1:
             raise ValueError("dropout doit être compris entre 0 inclus et 1 exclu.")
 
