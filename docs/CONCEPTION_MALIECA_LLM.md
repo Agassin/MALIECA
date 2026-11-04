@@ -57,7 +57,7 @@ Contraintes :
 - tokens spéciaux distincts pour début/fin de message et rôles ;
 - sauvegarde de la configuration et du vocabulaire avec chaque checkpoint.
 
-Un premier script de mesure est disponible avec `python scripts/evaluer_tokenizer.py`. Il utilise un corpus synthétique écrit pour le projet et rapporte le nombre d'octets, le nombre de tokens, le nombre de fusions, les octets par token et la réversibilité. Ce contrôle vérifie le pipeline, mais ne permet pas de conclure sur la qualité d'un tokenizer en production.\n\nLa prochaine évaluation devra utiliser un corpus français, du code et des commandes plus représentatifs, avec provenance/licences documentées et séparation entre apprentissage et évaluation. La taille du vocabulaire sera révisée après cette mesure.
+Un premier script de mesure est disponible avec `python scripts/evaluer_tokenizer.py`. Il entraîne sur un corpus synthétique écrit pour le projet et mesure sur un second corpus synthétique tenu à part. Il rapporte le nombre d'octets, le nombre de tokens, le nombre de fusions, les octets par token et la réversibilité. Ce contrôle vérifie le pipeline, mais ne permet pas de conclure sur la qualité d'un tokenizer en production.\n\nLa prochaine évaluation devra utiliser un corpus français, du code et des commandes plus représentatifs, avec provenance/licences documentées et séparation entre apprentissage et évaluation. La taille du vocabulaire sera révisée après cette mesure.
 
 ### 3.3 Format conversationnel
 
