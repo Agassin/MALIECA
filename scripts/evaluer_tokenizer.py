@@ -2,7 +2,7 @@
 
 
 
-CORPUS = [
+TRAINING_CORPUS = [
     "Bonjour, je suis MALIECA, ton assistant personnel.",
     "Je peux analyser une demande, préparer un plan et utiliser des outils autorisés.",
     "La sécurité reste sous le contrôle du Runtime.",
@@ -15,6 +15,14 @@ CORPUS = [
     "MALIECA utilise Python, des tests automatisés et Git.",
 ] * 4
 
+EVALUATION_CORPUS = [
+    "MALIECA doit expliquer ses décisions et vérifier les résultats.",
+    "Les appels d'outils doivent respecter un schéma strict.",
+    "Une conversation contient des messages utilisateur et assistant.",
+    "def validate_arguments(arguments, schema):",
+    "    return validate(arguments, schema)",
+]
+
 
 def main() -> None:
     """Entraîne le tokenizer de démonstration puis affiche ses mesures."""
@@ -22,11 +30,11 @@ def main() -> None:
     from app.ai.tokenizers.evaluation import evaluate_tokenizer
 
     tokenizer = BytePairTokenizer.train(
-        CORPUS,
+        TRAINING_CORPUS,
         vocab_size=512,
         min_frequency=2,
     )
-    metrics = evaluate_tokenizer(tokenizer, CORPUS)
+    metrics = evaluate_tokenizer(tokenizer, EVALUATION_CORPUS)
 
     print("Évaluation du tokenizer BPE de MALIECA")
     print("--------------------------------------")
@@ -39,7 +47,7 @@ def main() -> None:
     print(f"Ratio octets/tokens  : {metrics.compression_ratio:.3f}")
     print(f"Réversibilité        : {'OK' if metrics.round_trip_ok else 'ÉCHEC'}")
     print()
-    print("Note : corpus synthétique de démonstration, pas un benchmark représentatif.")
+    print("Note : corpus synthétique séparé en apprentissage et évaluation, pas un benchmark représentatif.")
 
 
 if __name__ == "__main__":
