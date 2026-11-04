@@ -50,6 +50,7 @@ L'objectif final est de construire **MALIECA-LLM**, notre propre modèle princip
 - [x] prototype de tokenizer BPE au niveau des octets
 - [x] tests d'encodage/décodage, de reproductibilité et de sauvegarde du tokenizer
 - [x] métriques d'évaluation BPE et script de démonstration
+- [x] configuration validée du futur Transformer (sans réseau neuronal ni dépendance ML)
 
 ### Interface
 
@@ -133,7 +134,8 @@ Le Runtime ne dépend pas directement d'Ollama. L'adaptateur Ollama implémente 
 - [x] Premier protocole de mesure du tokenizer (corpus synthétique)
 - [ ] Évaluer le tokenizer sur un corpus français représentatif et documenté
 - [ ] Connecter et tester davantage de modèles locaux temporaires
-- [ ] Concevoir l'architecture du modèle
+- [x] Première configuration structurelle du Transformer (`app/ai/models/config.py`)
+- [ ] Implémenter et tester le forward pass du Transformer après inventaire matériel
 - [ ] Sélectionner des données autorisées et documenter leurs licences
 - [ ] Entraîner une première version
 - [ ] Intégrer MALIECA-LLM dans `AIModel`
