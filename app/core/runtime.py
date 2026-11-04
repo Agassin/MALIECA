@@ -107,7 +107,8 @@ class Runtime:
 
         try:
             return tool.execute(arguments)
-        except Exception as error:
+        except Exception as error:  # noqa: BLE001
+            # Une erreur d'outil ne doit pas interrompre toute la conversation.
             return ToolResult(
                 success=False,
                 error=f"Échec de l'outil '{name}' : {error}",
