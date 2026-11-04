@@ -179,7 +179,17 @@ py -3.12 -m venv .venv
 
 Puis reprends l'installation à l'étape 4. Ce clone est indépendant du dossier initial.
 
-## 12. Conception de MALIECA-LLM
+## 12. Évaluer le tokenizer expérimental
+
+Depuis la racine du dépôt, après installation du projet :
+
+```powershell
+python scripts/evaluer_tokenizer.py
+```
+
+Le script affiche le nombre d'octets, le nombre de tokens, la taille du vocabulaire, les fusions apprises et la vérification de réversibilité. Il utilise un corpus synthétique de démonstration : ses résultats ne constituent pas un benchmark de qualité représentatif.
+
+## 13. Conception de MALIECA-LLM
 
 Le cadrage technique initial, les hypothèses de tokenizer et de modèle, les règles de données et les critères de validation sont documentés dans [`CONCEPTION_MALIECA_LLM.md`](CONCEPTION_MALIECA_LLM.md). Les choix de taille du modèle et d'entraînement restent ouverts jusqu'à l'inventaire du matériel.
 
