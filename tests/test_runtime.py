@@ -172,3 +172,33 @@ def test_runtime_ne_transmet_pas_les_outils_non_autorises_au_modele():
     definitions = assistant.runtime._get_tool_definitions()
 
     assert [definition.name for definition in definitions] == ["fake"]
+
+
+class IntegerArgumentTool(FakeRuntimeTool):
+    name = "integer_argument"
+    parameters = {
+        "type": "object",
+        "properties": {"count": {"type": "integer"}},
+        "required": ["count"],
+    }
+
+    def __init__(self) -> None:
+        self.executed = False
+
+    def execute(self, arguments: dict[str, object]) -> ToolResult:
+        self.executed = True
+        return ToolResult(success=True, output=arguments)
+
+
+def test_runtime_valide_les_arguments_avant_execution():
+    tool = IntegerArgumentTool()
+    registry = ToolRegistry()
+    registry.register(tool)
+    assistant = Assistant(model=FakeModel())
+    assistant.runtime.tool_registry = registry
+
+    result = assistant.runtime.execute_tool("integer_argument", {"count": "pas un entier"})
+
+    assert result.success is False
+    assert "type integer" in str(result.error)
+    assert tool.executed is False
