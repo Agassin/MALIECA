@@ -33,7 +33,7 @@ class BytePairTokenizer:
         if min_frequency < 1:
             raise ValueError("La fréquence minimale doit être positive.")
 
-        sequences = [list(text.encode("utf-8")) for text in texts]
+        sequences = [[bytes([value]) for value in text.encode("utf-8")] for text in texts]
         merges: list[tuple[bytes, bytes]] = []
         vocabulary = {bytes([value]) for value in range(cls.BASE_VOCAB_SIZE)}
 
@@ -41,12 +41,7 @@ class BytePairTokenizer:
             frequencies: dict[tuple[bytes, bytes], int] = {}
             for sequence in sequences:
                 for index in range(len(sequence) - 1):
-                    pair = (
-                        bytes([sequence[index]]),
-                        bytes([sequence[index + 1]]),
-                    )
-                    # Les séquences contiennent des identifiants d'octets ou
-                    # des unités fusionnées encodées dans les listes ci-dessous.
+                    pair = (sequence[index], sequence[index + 1])
                     frequencies[pair] = frequencies.get(pair, 0) + 1
 
             if not frequencies:
@@ -66,10 +61,9 @@ class BytePairTokenizer:
 
             updated_sequences: list[list[bytes]] = []
             for sequence in sequences:
-                units = [bytes([value]) for value in sequence]
                 updated: list[bytes] = []
                 index = 0
-                while index < len(units):
+                while index < len(sequence):
                     if (
                         index + 1 < len(units)
                         and units[index] == left
@@ -78,12 +72,11 @@ class BytePairTokenizer:
                         updated.append(merged)
                         index += 2
                     else:
-                        updated.append(units[index])
+                        updated.append(sequence[index])
                         index += 1
-                updated_sequences.append(updated)  # type: ignore[arg-type]
+                updated_sequences.append(updated)
 
-            # Les séquences sont converties en unités binaires fusionnées.
-            sequences = updated_sequences  # type: ignore[assignment]
+            sequences = updated_sequences
 
         return cls(merges)
 
@@ -97,8 +90,8 @@ class BytePairTokenizer:
             while index < len(units):
                 if (
                     index + 1 < len(units)
-                    and units[index] == left
-                    and units[index + 1] == right
+                    and sequence[index] == left
+                    and sequence[index + 1] == right
                 ):
                     updated.append(merged)
                     index += 2
