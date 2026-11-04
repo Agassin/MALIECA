@@ -33,7 +33,7 @@ source .venv/bin/activate
 Windows PowerShell :
 
 ```powershell
-py -3.11 -m venv .venv
+py -3.12 -m venv .venv
 .\.venv\Scripts\Activate.ps1
 ```
 
@@ -132,7 +132,7 @@ Ollama / qwen3
 Réponse finale
 ```
 
-Le Runtime limite le nombre d'itérations afin d'éviter une boucle infinie.
+Le Runtime limite le nombre de cycles d'outils afin d'éviter une boucle infinie. Par sécurité, seuls les outils en lecture seule sont exécutés automatiquement. Les outils qui modifient des données ou agissent à l'extérieur sont bloqués jusqu'à l'ajout d'un système de confirmation explicite. Les erreurs d'outils sont renvoyées au modèle sous forme de résultats contrôlés.
 
 ## 9. Dépannage
 
@@ -165,6 +165,23 @@ ruff check .
 pytest
 git status
 ```
+
+## 11. Si Windows ne peut pas créer `.venv`
+
+Si PowerShell indique que `.venv` ou un simple fichier est introuvable/impossible à créer dans le dossier du dépôt, vérifie d'abord que le dossier accepte l'écriture. Ne supprime pas le dépôt existant. Tu peux faire un clone de test dans un emplacement accessible, par exemple :
+
+```powershell
+git clone https://github.com/Agassin/MALIECA.git D:\\MALIECA-test
+cd D:\\MALIECA-test
+py -3.12 -m venv .venv
+.\\.venv\\Scripts\\Activate.ps1
+```
+
+Puis reprends l'installation à l'étape 4. Ce clone est indépendant du dossier initial.
+
+## 12. Conception de MALIECA-LLM
+
+Le cadrage technique initial, les hypothèses de tokenizer et de modèle, les règles de données et les critères de validation sont documentés dans [`CONCEPTION_MALIECA_LLM.md`](CONCEPTION_MALIECA_LLM.md). Les choix de taille du modèle et d'entraînement restent ouverts jusqu'à l'inventaire du matériel.
 
 ## Architecture actuelle
 
