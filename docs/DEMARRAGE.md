@@ -187,7 +187,7 @@ Depuis la racine du dépôt, après installation du projet :
 python scripts/evaluer_tokenizer.py
 ```
 
-Le script affiche le nombre d'octets, le nombre de tokens, la taille du vocabulaire, les fusions apprises et la vérification de réversibilité. Il utilise un corpus synthétique de démonstration : ses résultats ne constituent pas un benchmark de qualité représentatif.
+Le script affiche le nombre d'octets, le nombre de tokens, la taille du vocabulaire, les fusions apprises et la vérification de réversibilité. Il entraîne sur un corpus synthétique et mesure sur un second corpus tenu à part. Les résultats ne constituent pas un benchmark de qualité représentatif.
 
 ## 13. Conception de MALIECA-LLM
 
