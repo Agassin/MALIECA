@@ -1,7 +1,7 @@
 """Évalue le prototype BPE sur un corpus de démonstration créé pour MALIECA."""
 
-from app.ai.tokenizers.evaluation import evaluate_tokenizer
 from app.ai.tokenizers.bpe import BytePairTokenizer
+from app.ai.tokenizers.evaluation import evaluate_tokenizer
 
 
 CORPUS = [
