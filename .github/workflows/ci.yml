@@ -22,3 +22,5 @@ jobs:
         run: ruff check .
       - name: Tests
         run: pytest
+      - name: Évaluation de démonstration du tokenizer
+        run: python scripts/evaluer_tokenizer.py
