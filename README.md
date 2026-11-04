@@ -47,6 +47,7 @@ L'objectif final est de construire **MALIECA-LLM**, notre propre modèle princip
 - [x] exécution automatique limitée aux outils en lecture seule
 - [x] blocage des outils modificateurs sans autorisation
 - [x] gestion contrôlée des outils inconnus et des exceptions
+- [x] validation stricte des arguments d'outils (types, champs requis, champs inconnus et bornes simples)
 - [x] prototype de tokenizer BPE au niveau des octets
 - [x] tests d'encodage/décodage, de reproductibilité et de sauvegarde du tokenizer
 - [x] métriques d'évaluation BPE et script de démonstration
@@ -94,7 +95,7 @@ pytest
 
 ## Sécurité actuelle du Runtime
 
-Le Runtime ne présente au modèle et n'exécute automatiquement que les outils `READ_ONLY`. Les outils qui modifient des données ou déclenchent une action externe sont bloqués tant qu'un mécanisme de confirmation explicite n'est pas disponible. Les outils inconnus et les exceptions sont convertis en résultats d'erreur contrôlés.
+Le Runtime ne présente au modèle et n'exécute automatiquement que les outils `READ_ONLY`. Les outils qui modifient des données ou déclenchent une action externe sont bloqués tant qu'un mécanisme de confirmation explicite n'est pas disponible. Les arguments sont validés avant l'exécution (types, champs requis, propriétés inconnues et contraintes simples). Les outils inconnus et les exceptions sont convertis en résultats d'erreur contrôlés.
 
 Cette protection est volontairement restrictive : elle évite qu'un modèle puisse déclencher une action non autorisée simplement en produisant un appel d'outil.
 
