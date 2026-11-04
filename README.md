@@ -183,13 +183,17 @@ MALIECA/
 ├── app/
 │   ├── ai/
 │   │   ├── providers/
-│   │   └── tokenizers/
+│   │   ├── tokenizers/
+│   │   └── models/
 │   ├── core/
 │   ├── memory/
 │   ├── tools/
+│   │   └── validation.py
 │   ├── interfaces/
 │   └── main.py
 ├── tests/
+├── scripts/
+│   └── evaluer_tokenizer.py
 ├── docs/
 ├── .github/workflows/
 ├── pyproject.toml
