@@ -124,6 +124,7 @@ class Runtime:
                 parameters=tool.parameters,
             )
             for tool in self.tool_registry.list_tools()
+            if tool.risk_level == ToolRisk.READ_ONLY
         ]
 
     @staticmethod
