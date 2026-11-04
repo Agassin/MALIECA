@@ -46,7 +46,9 @@ Aucune taille définitive n'est choisie avant l'inventaire du matériel et un be
 
 ### 3.2 Tokenizer
 
-Hypothèse de départ : Byte Pair Encoding (BPE), avec vocabulaire expérimental de 8 000 tokens.
+Hypothèse de départ : Byte Pair Encoding (BPE). Un premier prototype éducatif au niveau des octets existe dans `app/ai/tokenizers/bpe.py`. Il est déterministe, sans dépendance externe et possède des tests d'encodage/décodage et de sauvegarde. Il n'est pas encore optimisé ni validé sur un corpus représentatif.
+
+La cible expérimentale de vocabulaire reste à étudier ; 8 000 tokens est une hypothèse pour une version ultérieure, pas la taille actuelle du prototype (512 par défaut).
 
 Contraintes :
 - corpus de tokenizer séparé des jeux d'évaluation ;
@@ -122,7 +124,7 @@ Principes :
 | Phase | Livrable | Critère de validation |
 |---|---|---|
 | 0 | Inventaire matériel et objectifs | CPU, RAM, GPU, VRAM et stockage connus |
-| 1 | Prototype tokenizer | encodage/décodage réversible sur les cas de test |
+| 1 | Prototype tokenizer | première implémentation BPE et tests de réversibilité présents ; benchmark représentatif restant à faire |
 | 2 | Petit Transformer | formes, masquage causal et forward pass testés |
 | 3 | Pipeline de données | sources/licences documentées, splits sans fuite |
 | 4 | Entraînement minimal | perte qui converge sur un petit corpus contrôlé |
