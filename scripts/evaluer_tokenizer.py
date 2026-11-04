@@ -47,7 +47,8 @@ def main() -> None:
     print(f"Ratio octets/tokens  : {metrics.compression_ratio:.3f}")
     print(f"Réversibilité        : {'OK' if metrics.round_trip_ok else 'ÉCHEC'}")
     print()
-    print("Note : corpus synthétique séparé en apprentissage et évaluation, pas un benchmark représentatif.")
+    print(\n        "Note : corpus synthétique séparé en apprentissage et évaluation, "
+        "pas un benchmark représentatif."\n    )
 
 
 if __name__ == "__main__":
