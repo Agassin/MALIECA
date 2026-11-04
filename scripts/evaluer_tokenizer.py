@@ -1,7 +1,6 @@
 """Évalue le prototype BPE sur un corpus de démonstration créé pour MALIECA."""
 
-from app.ai.tokenizers.bpe import BytePairTokenizer
-from app.ai.tokenizers.evaluation import evaluate_tokenizer
+from app.ai.tokenizers import bpe, evaluation
 
 
 CORPUS = [
@@ -20,12 +19,12 @@ CORPUS = [
 
 def main() -> None:
     """Entraîne le tokenizer de démonstration puis affiche ses mesures."""
-    tokenizer = BytePairTokenizer.train(
+    tokenizer = bpe.BytePairTokenizer.train(
         CORPUS,
         vocab_size=512,
         min_frequency=2,
     )
-    metrics = evaluate_tokenizer(tokenizer, CORPUS)
+    metrics = evaluation.evaluate_tokenizer(tokenizer, CORPUS)
 
     print("Évaluation du tokenizer BPE de MALIECA")
     print("--------------------------------------")
