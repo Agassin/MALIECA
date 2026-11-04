@@ -107,6 +107,7 @@ def test_runtime_arrete_une_boucle_agentique_infinie():
 
 
 class ReversibleFakeTool(FakeRuntimeTool):
+    name = "reversible_fake"
     risk_level = ToolRisk.REVERSIBLE
 
     def __init__(self) -> None:
@@ -124,7 +125,7 @@ def test_runtime_bloque_un_outil_qui_modifie_des_donnees():
     assistant = Assistant(model=FakeModel())
     assistant.runtime.tool_registry = registry
 
-    result = assistant.runtime.execute_tool("fake", {})
+    result = assistant.runtime.execute_tool("reversible_fake", {})
 
     assert result.success is False
     assert "autorisation explicite" in str(result.error)
