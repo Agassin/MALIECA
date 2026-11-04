@@ -101,3 +101,62 @@ def test_runtime_arrete_une_boucle_agentique_infinie():
         assert False
     except RuntimeError as error:
         assert "limite d'itérations" in str(error)
+
+
+class ReversibleFakeTool(FakeRuntimeTool):
+    risk_level = ToolRisk.REVERSIBLE
+
+    def __init__(self) -> None:
+        self.executed = False
+
+    def execute(self, arguments: dict[str, object]) -> ToolResult:
+        self.executed = True
+        return ToolResult(success=True, output="modification effectuée")
+
+
+def test_runtime_bloque_un_outil_qui_modifie_des_donnees():
+    tool = ReversibleFakeTool()
+    registry = ToolRegistry()
+    registry.register(tool)
+    assistant = Assistant(model=FakeModel())
+    assistant.runtime.tool_registry = registry
+
+    result = assistant.runtime.execute_tool("fake", {})
+
+    assert result.success is False
+    assert "autorisation explicite" in str(result.error)
+    assert tool.executed is False
+
+
+def test_runtime_transforme_un_outil_inconnu_en_erreur():
+    assistant = Assistant(model=FakeModel())
+
+    result = assistant.runtime.execute_tool("outil_inconnu", {})
+
+    assert result.success is False
+    assert "n'est pas enregistré" in str(result.error)
+
+
+def test_runtime_transforme_une_exception_d_outil_en_erreur():
+    class BrokenTool(FakeRuntimeTool):
+        def execute(self, arguments: dict[str, object]) -> ToolResult:
+            raise ValueError("erreur simulée")
+
+    registry = ToolRegistry()
+    registry.register(BrokenTool())
+    assistant = Assistant(model=FakeModel())
+    assistant.runtime.tool_registry = registry
+
+    result = assistant.runtime.execute_tool("fake", {})
+
+    assert result.success is False
+    assert "erreur simulée" in str(result.error)
+
+
+def test_runtime_refuse_une_limite_d_iterations_nulle():
+    import pytest
+
+    with pytest.raises(ValueError, match="supérieure à zéro"):
+        from app.core.runtime import Runtime
+
+        Runtime(max_tool_iterations=0)
