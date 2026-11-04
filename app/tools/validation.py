@@ -1,7 +1,5 @@
 """Validation stricte des arguments reçus par les outils."""
 
-from typing import Any
-
 
 _JSON_TYPES = {
     "object": dict,
@@ -18,7 +16,7 @@ def validate_arguments(arguments: object, schema: dict[str, object]) -> None:
     _validate_value(arguments, schema, "arguments")
 
 
-def _validate_value(value: Any, schema: dict[str, object], path: str) -> None:
+def _validate_value(value: object, schema: dict[str, object], path: str) -> None:
     expected_type = schema.get("type")
     if expected_type == "null":
         if value is not None:
@@ -44,11 +42,11 @@ def _validate_value(value: Any, schema: dict[str, object], path: str) -> None:
         properties = schema.get("properties", {})
         required = schema.get("required", [])
         if not isinstance(properties, dict) or not isinstance(required, list):
-            raise ValueError(f"Schéma d'objet invalide pour {path}.")
+            raise TypeError(f"Schéma d'objet invalide pour {path}.")
 
         for name in required:
             if not isinstance(name, str):
-                raise ValueError(f"Schéma required invalide pour {path}.")
+                raise TypeError(f"Schéma required invalide pour {path}.")
             if name not in value:
                 raise ValueError(f"{path}.{name} est obligatoire.")
 
