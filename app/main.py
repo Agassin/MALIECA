@@ -3,9 +3,9 @@
 from app.interfaces.cli import run_cli
 
 
-def main() -> None:
+def main(argv: list[str] | None = None) -> None:
     """Start the assistant."""
-    run_cli()
+    run_cli(argv)
 
 
 if __name__ == "__main__":

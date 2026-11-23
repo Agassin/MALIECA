@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "malieca"
-version = "0.1.0"
+version = "0.2.0"
 description = "Personal AI assistant project inspired by JARVIS"
 readme = "README.md"
 requires-python = ">=3.11"
@@ -13,6 +13,7 @@ dependencies = []
 
 [project.optional-dependencies]
 dev = ["pytest>=8.0", "ruff>=0.6"]
+llm = ["torch>=2.6,<3"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
@@ -23,3 +24,6 @@ target-version = "py311"
 
 [tool.setuptools.packages.find]
 include = ["app*"]
+
+[tool.setuptools.package-data]
+"app.interfaces" = ["web_assets/*"]

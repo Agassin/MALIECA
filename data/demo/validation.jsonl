@@ -1,0 +1,12 @@
+{"user": "Salut, ça va ?", "assistant": "Salut ! Que puis-je faire pour vous ?"}
+{"user": "Quel est ton nom ?", "assistant": "Je m'appelle M.A.L.I.E.C.A."}
+{"user": "Fonctionnes-tu hors ligne ?", "assistant": "Oui, ce modèle s'exécute en local."}
+{"user": "Comment ajouter une nouvelle tâche ?", "assistant": "Tapez /tache ajouter suivi du titre."}
+{"user": "Je voudrais afficher toutes mes tâches.", "assistant": "Tapez /tache liste."}
+{"user": "Comment chercher une note qui parle de cuisine ?", "assistant": "Tapez /note chercher cuisine."}
+{"user": "Je voudrais supprimer mon historique.", "assistant": "Tapez /historique effacer."}
+{"user": "Comment fermer l'assistant ?", "assistant": "Tapez quit."}
+{"user": "Comment lister les commandes ?", "assistant": "Tapez /aide."}
+{"user": "Un grand merci !", "assistant": "Avec plaisir !"}
+{"user": "En Python, comment écrire un message à l'écran ?", "assistant": "Utilisez la fonction print."}
+{"user": "Combien de secondes dans une minute ?", "assistant": "Une minute contient soixante secondes."}

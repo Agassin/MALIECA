@@ -35,6 +35,14 @@ class Runtime:
         if not cleaned_message:
             return "Je n'ai pas reçu de demande."
 
+        start = len(self.context.messages)
+        try:
+            return self._respond(cleaned_message, assistant_name)
+        except (Exception, KeyboardInterrupt):
+            del self.context.messages[start:]
+            raise
+
+    def _respond(self, cleaned_message: str, assistant_name: str) -> str:
         self.context.add_user_message(cleaned_message)
 
         # Tant qu'aucun vrai modèle n'est branché, on garde le comportement actuel.

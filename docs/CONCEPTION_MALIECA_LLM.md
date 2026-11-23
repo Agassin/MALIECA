@@ -42,7 +42,9 @@ Composants à prototyper :
 - projection vers le vocabulaire ;
 - fonction de perte cross-entropy.
 
-Une configuration validée et indépendante du backend est disponible dans `app/ai/models/config.py` (`TransformerConfig`). Elle contrôle les dimensions positives, la compatibilité entre `d_model` et `num_heads`, la taille minimale du vocabulaire et les bornes du dropout. Elle ne construit pas encore de réseau neuronal et ne fixe aucune valeur recommandée pour la machine.\n\nAucune taille définitive n'est choisie avant l'inventaire du matériel et un benchmark mémoire/temps.
+Une configuration validée et indépendante du backend est disponible dans `app/ai/models/config.py` (`TransformerConfig`). Elle contrôle les dimensions positives, la compatibilité entre `d_model` et `num_heads`, la taille minimale du vocabulaire et les bornes du dropout. Le prototype utilise PyTorch et deux blocs causaux de dimension 48 sur CPU. Cette configuration
+sert aux tests du pipeline. La taille d'un modèle d'usage dépendra du matériel et d'un benchmark
+mémoire et durée.
 
 ### 3.2 Tokenizer
 
@@ -57,7 +59,9 @@ Contraintes :
 - tokens spéciaux distincts pour début/fin de message et rôles ;
 - sauvegarde de la configuration et du vocabulaire avec chaque checkpoint.
 
-Un premier script de mesure est disponible avec `python scripts/evaluer_tokenizer.py`. Il entraîne sur un corpus synthétique écrit pour le projet et mesure sur un second corpus synthétique tenu à part. Il rapporte le nombre d'octets, le nombre de tokens, le nombre de fusions, les octets par token et la réversibilité. Ce contrôle vérifie le pipeline, mais ne permet pas de conclure sur la qualité d'un tokenizer en production.\n\nLa prochaine évaluation devra utiliser un corpus français, du code et des commandes plus représentatifs, avec provenance/licences documentées et séparation entre apprentissage et évaluation. La taille du vocabulaire sera révisée après cette mesure.
+Un premier script de mesure est disponible avec `python scripts/evaluer_tokenizer.py`. Il entraîne sur un corpus synthétique écrit pour le projet et mesure sur un second corpus synthétique tenu à part. Il rapporte le nombre d'octets, le nombre de tokens, le nombre de fusions, les octets par token et la réversibilité. Ce contrôle mesure le comportement du tokenizer sur son petit jeu de démonstration.
+
+Une évaluation destinée à dimensionner le modèle devra utiliser un corpus français, du code et des commandes plus représentatifs, avec provenance/licences documentées et séparation entre apprentissage et évaluation. La taille du vocabulaire sera révisée après cette mesure.
 
 ### 3.3 Format conversationnel
 
@@ -143,7 +147,7 @@ Il faut relever sur la machine de développement :
 - espace disque disponible ;
 - système d'exploitation et version de Python.
 
-Tant que ces informations ne sont pas connues, il serait prématuré de choisir une taille de modèle, un batch size ou une durée d'entraînement.
+Ces mesures orienteront le dimensionnement du prochain entraînement sur un corpus élargi.
 
 ## 9. Décisions ouvertes
 
@@ -155,3 +159,22 @@ Tant que ces informations ne sont pas connues, il serait prématuré de choisir 
 - format exact des messages et appels d'outils.
 
 Ces décisions seront prises à partir de mesures, et non sur des estimations arbitraires.
+
+## 10. Première expérience CPU
+
+Le script `scripts/entrainer_malieca.py` entraîne le tokenizer BPE, puis apprend la
+réponse et le token de fin d'échange à partir d'un prompt utilisateur. Les données JSONL
+sont documentées dans `data/demo/README.md`. Le script refuse les demandes dupliquées
+dans un même jeu ou partagées à l'identique entre les deux jeux.
+
+Sur Linux x86-64 avec Python 3.12 et PyTorch 2.10 CPU, l'expérience par défaut
+(48 exemples d'entraînement, 12 de validation, 160 étapes, graine 42) a fait passer la
+perte de validation de 6,31 à 4,09. La perte d'entraînement finale était de 0,26 et le
+tokenizer atteignait 2,59 octets par token en validation. L'écart entre les pertes
+montre un surapprentissage important. Le checkpoint a été rechargé avec
+`python -m app.main --checkpoint .data/malieca-demo.pt` et a généré une réponse
+à « Bonjour ». Cette demande fait partie de l'entraînement.
+
+Les identifiants réservés aux rôles et à la fin de séquence restent distincts
+des identifiants BPE. Le checkpoint contient les poids, la configuration, les fusions
+BPE, les empreintes des corpus et les mesures d'entraînement.
