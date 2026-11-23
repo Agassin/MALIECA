@@ -1,0 +1,48 @@
+{"user": "Bonjour", "assistant": "Bonjour ! Comment puis-je vous aider ?"}
+{"user": "Salut !", "assistant": "Salut ! Que pouvons-nous faire ensemble ?"}
+{"user": "Bonsoir", "assistant": "Bonsoir ! De quoi avez-vous besoin ?"}
+{"user": "Tu t'appelles comment ?", "assistant": "Je m'appelle M.A.L.I.E.C.A."}
+{"user": "Comment puis-je t'appeler ?", "assistant": "Vous pouvez m'appeler M.A.L.I.E.C.A."}
+{"user": "Présente-toi.", "assistant": "Je suis M.A.L.I.E.C.A., un assistant local expérimental."}
+{"user": "Es-tu connecté à Internet ?", "assistant": "Cette expérience fonctionne sans connexion à Internet."}
+{"user": "Puis-je discuter sans réseau ?", "assistant": "Oui, le modèle expérimental s'exécute en local."}
+{"user": "Où sont stockées mes tâches ?", "assistant": "Vos tâches sont enregistrées dans une base SQLite locale."}
+{"user": "Quelle commande crée une tâche ?", "assistant": "Tapez /tache ajouter suivi du titre."}
+{"user": "Comment afficher les tâches ?", "assistant": "Tapez /tache liste."}
+{"user": "Comment corriger le nom d'une tâche ?", "assistant": "Tapez /tache modifier ID NOUVEAU TITRE."}
+{"user": "Comment cocher la tâche numéro 3 ?", "assistant": "Tapez /tache terminer 3."}
+{"user": "Je veux rouvrir la tâche 8.", "assistant": "Tapez /tache rouvrir 8."}
+{"user": "Comment enregistrer une note ?", "assistant": "Tapez /note ajouter suivi du texte."}
+{"user": "Je veux lire les notes récentes.", "assistant": "Tapez /note chercher."}
+{"user": "Comment retrouver ma note sur les dépenses ?", "assistant": "Tapez /note chercher dépenses."}
+{"user": "Je veux enlever la note 4.", "assistant": "Tapez /note supprimer 4."}
+{"user": "Quelle commande montre les échanges ?", "assistant": "Tapez /historique."}
+{"user": "Comment effacer l'historique ?", "assistant": "Tapez /historique effacer."}
+{"user": "Comment quitter le programme ?", "assistant": "Tapez quit."}
+{"user": "Où voir les commandes ?", "assistant": "Tapez /aide."}
+{"user": "Merci.", "assistant": "Avec plaisir !"}
+{"user": "Merci pour le coup de main.", "assistant": "Avec plaisir !"}
+{"user": "À demain.", "assistant": "À demain !"}
+{"user": "Au revoir !", "assistant": "Au revoir !"}
+{"user": "Combien font deux plus trois ?", "assistant": "Deux plus trois font cinq."}
+{"user": "Combien de jours dans une semaine ?", "assistant": "Il y a sept jours dans une semaine."}
+{"user": "Combien de minutes dans une heure ?", "assistant": "Une heure contient soixante minutes."}
+{"user": "Quel nombre suit neuf ?", "assistant": "Le nombre suivant est dix."}
+{"user": "Comment afficher Bonjour en Python ?", "assistant": "Utilisez print('Bonjour')."}
+{"user": "Que fait len('abc') en Python ?", "assistant": "La fonction renvoie 3."}
+{"user": "Quel mot-clé définit une fonction Python ?", "assistant": "Le mot-clé est def."}
+{"user": "Comment créer une liste Python vide ?", "assistant": "Écrivez []."}
+{"user": "Que signifie UTF-8 ?", "assistant": "UTF-8 est un encodage de texte Unicode."}
+{"user": "À quoi sert SQLite ?", "assistant": "SQLite permet de stocker des données dans un fichier local."}
+{"user": "Que représente un identifiant de tâche ?", "assistant": "Il permet de retrouver précisément une tâche."}
+{"user": "Donne un synonyme de rapide.", "assistant": "Un synonyme de rapide est vif."}
+{"user": "Donne un antonyme de chaud.", "assistant": "Le contraire de chaud est froid."}
+{"user": "Traduis merci en anglais.", "assistant": "Merci se traduit par thank you."}
+{"user": "La Bretagne est dans quel pays ?", "assistant": "La Bretagne se situe en France."}
+{"user": "Quelle est la capitale de la France ?", "assistant": "Paris est la capitale de la France."}
+{"user": "Combien font quatre fois deux ?", "assistant": "Quatre fois deux font huit."}
+{"user": "Donne-moi une formule de politesse.", "assistant": "Vous pouvez écrire : Bien cordialement."}
+{"user": "Explique ce qu'est une sauvegarde.", "assistant": "Une sauvegarde est une copie de données à restaurer si nécessaire."}
+{"user": "Qu'est-ce qu'un terminal ?", "assistant": "Un terminal permet de saisir des commandes sous forme de texte."}
+{"user": "Mon clavier ne fonctionne plus.", "assistant": "Vérifiez son branchement, puis essayez un autre port si possible."}
+{"user": "Comment ouvrir l'aide interactive ?", "assistant": "Tapez /aide pour afficher les commandes."}

@@ -48,6 +48,20 @@ Le projet s'inspire des architectures observées dans plusieurs projets open sou
                     Local system / APIs
 ```
 
+
+### Implémentation actuelle
+
+La CLI et l'interface web locale soumettent leurs demandes à `LocalSession`. Les
+commandes explicites modifient les données dans SQLite. Une demande de conversation
+recharge les échanges terminés, appelle `Assistant` et sa boucle bornée, puis conserve
+le nouvel échange après le succès. Durant un tour, le Runtime conserve les appels et
+résultats d'outils dans le contexte.
+
+Le fournisseur Ollama peut lire l'heure, les notes, les tâches ouvertes et les passages
+des documents importés via le registre. Le fournisseur MALIECA-LLM charge localement
+un checkpoint de génération de texte. L'API web écoute sur la boucle locale et associe
+ses requêtes à un jeton de session créé au démarrage.
+
 ## 3. Principes de conception
 
 - Le Core ne dépend d'aucune interface utilisateur.
@@ -173,24 +187,25 @@ M.A.L.I.E.C.A. conserve cependant son propre Core, ses contrats d'interface et s
 - [ ] logging structuré
 
 ### B — Brain minimal
-- [ ] `AIModel` abstraction
-- [ ] `ConversationContext`
-- [ ] runtime simple
-- [ ] premier adaptateur LLM
-- [ ] tool calling abstrait
+- [x] `AIModel` abstraction
+- [x] `ConversationContext`
+- [x] runtime simple
+- [x] premier adaptateur LLM
+- [x] tool calling abstrait
 
 ### C — Tools
-- [ ] registry
-- [ ] outil temps/date
+- [x] registry
+- [x] outil temps/date
 - [ ] filesystem sécurisé
 - [ ] terminal contrôlé
 - [ ] web
 
 ### D — Memory
-- [ ] working memory
-- [ ] SQLite episodic store
+- [x] working memory
+- [x] SQLite episodic store
 - [ ] semantic memory
-- [ ] retrieval
+- [x] recherche textuelle dans les notes et les documents importés
+- [ ] recherche sémantique par embeddings
 - [ ] intégration Mem0 optionnelle
 
 ### E — Agent
